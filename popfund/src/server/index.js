@@ -1,6 +1,29 @@
 const express = require('express');
 const os = require('os');
 
+const {MongoClient} = require('mongodb');
+
+async function listDatabases(client){
+    databasesList = await client.db().admin().listDatabases();
+    console.log("Current Databases:");
+    databasesList.databases.forEach(db => console.log(` ~ ${db.name}`));
+}
+
+async function connectDB(){
+    const mongo_uri = 'mongodb+srv://genuser:popfund@popfund-cluster-jxrtb.mongodb.net/test?retryWrites=true&w=majority';
+    const client = new MongoClient(mongo_uri);
+    try {
+        await client.connect();
+        await listDatabases(client);
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+}
+
+connectDB().catch(console.error);
+
 const app = express();
 
 app.use(express.static('dist'));
