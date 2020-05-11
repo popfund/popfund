@@ -41,6 +41,12 @@ app.get('/api/getBusinesses', (req, res) => {
     console.log(lat);
     console.log(long);
     res.send(`${lat}, ${long}`);
+    // 1. get the latitude and longitude passed in from frontend through url params : DONE ABOVE
+    // 2. loop through all the business records in businesses collection // Require looking into MONGO documentation
+    // 3.   for each of these businesses euclidean distance
+    // 4.   if euclidean distance < threshold: add that business to a list
+    // 5. Wrap the list in json format // JSON library + dictionaries/objects in JS
+    // 6. res.send(json_formatted_response)
 });
 
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
