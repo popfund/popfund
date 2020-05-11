@@ -34,6 +34,7 @@ app.get('/', (req, res) => res.send('GET request to the homepage'));
 app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
 
 app.get('/api/getBusinesses', (req, res) => {
+    console.log('some changes');
     console.log('here');
     const lat = req.query.lat;
     const long = req.query.long;
