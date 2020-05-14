@@ -7,7 +7,6 @@ export default class Home extends Component {
   render() {
     return (
       <div style={{ marginTop: '10%' }}>
-        <h1>Welcome to popfund.</h1>
         <BusinessList />
       </div>
     );
