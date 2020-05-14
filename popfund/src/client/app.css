@@ -6,3 +6,15 @@ body {
   text-align: center;
   margin: auto;
 }
+
+.App {
+  margin-top: 0px;
+}
+
+.App .navbar-brand {
+  font-weight: bold;
+}
+
+.App .container{
+  align-content: center
+}

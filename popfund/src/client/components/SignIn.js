@@ -46,6 +46,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function handleSubmit() {
+    // handle submit here
+    console.log('handling submit');
+}
+
 export default function SignIn() {
   const classes = useStyles();
 
@@ -59,7 +64,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
