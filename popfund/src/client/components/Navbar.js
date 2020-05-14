@@ -7,7 +7,7 @@ const Navigation = (props) => {
     console.log(props);
     return (
         <Navbar className='color-nav' variant="dark">
-            <Navbar.Brand href="#home">React Button</Navbar.Brand>
+            <Navbar.Brand href="#home">popfund</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
