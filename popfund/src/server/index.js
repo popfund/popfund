@@ -25,6 +25,10 @@ async function connectDB(){
 
 //Haversine formula: SHOULD TEST MORE
 function euclidianDistance(lat1, lon1, lat2, lon2) {
+    lat1 = parseFloat(lat1);
+    lon1 = parseFloat(lon1);
+    lat2 = parseFloat(lat2);
+    lat2 = parseFloat(lon2);
 	if ((lat1 == lat2) && (lon1 == lon2)) {
 		return 0;
 	}
@@ -32,11 +36,11 @@ function euclidianDistance(lat1, lon1, lat2, lon2) {
         const earthRD = 3958.8;
         const oPhi = lat1 * Math.PI/180;
         const tPhi = lat2 * Math.PI/180;
-        const dlat = ((lat2-lat1)* Math.PI/360)
-        const dlam = ((lon2-lon1)* Math.PI/360)
-        const a = Math.sin(dlat) * Math.sin(dlat) + Math.cos(oPhi) * Math.cos(tPhi)+ Math.sin(dlam) * Math.sin(dlam)
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
-        return (c * earthRD)
+        const dlat = ((lat2-lat1)* Math.PI/360);
+        const dlam = ((lon2-lon1)* Math.PI/360);
+        const a = Math.sin(dlat) * Math.sin(dlat) + Math.cos(oPhi) * Math.cos(tPhi)+ Math.sin(dlam) * Math.sin(dlam);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return (c * earthRD);
 	}
 }
 
@@ -64,9 +68,6 @@ app.get('/api/getBusinesses', async (req, res) => {
         businessObjects = []
         listofBusinesses = currentDB.collection('businesses').find({}, async (err, data) => {
             await data.forEach(doc => {
-                console.log(`doc lat: ${doc.lat}`);
-                console.log(`doc long: ${doc.long}`);
-                console.log(`doc: ${doc}`)
                 businessObjects.push(doc);
             });
             //made asynchronous
