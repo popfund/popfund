@@ -40,20 +40,6 @@ function euclidianDistance(lat1, lon1, lat2, lon2) {
 	}
 }
 
-async function listofBusinesses(lat, lon){
-    const mongo_uri = 'mongodb+srv://genuser:popfund@popfund-cluster-jxrtb.mongodb.net/test?retryWrites=true&w=majority';
-    const client = new MongoClient(mongo_uri);
-    try {
-        await client.connect();
-        currentDB = client.db('popfund')
-        listofBusinesses = currentDB.collection('businesses').find().forEach(db => console.log(euclidianDistance('${db.lat}','${db.lon}', lat, lon)));
-    } catch (e) {
-        console.error(e);
-    } finally {
-        await client.close();
-    }
-}
-
 connectDB().catch(console.error);
 const app = express();
 
@@ -63,24 +49,37 @@ app.use(express.static('dist'));
 app.get('/', (req, res) => res.send('GET request to the homepage'));
 app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
 
-app.get('/api/getBusinesses', (req, res) => {
-    console.log('some changes');
-    console.log('here');
+app.get('/api/getBusinesses', async (req, res) => {
     const lat = req.query.lat;
     const long = req.query.long;
-    console.log(lat);
-    console.log(long);
-    console.log(euclidianDistance(lat,long, 0, 0))
-    const businessAccess = listofBusinesses()
-    res.send(`${lat}, ${long}`);
+    console.log(`lat: ${lat}`);
+    console.log(`long: ${long}`);
+    console.log(`euclid distance: ${euclidianDistance(lat,long, 0, 0)}`);
 
+    const mongo_uri = 'mongodb+srv://genuser:popfund@popfund-cluster-jxrtb.mongodb.net/test?retryWrites=true&w=majority';
+    const client = new MongoClient(mongo_uri);
+    try {
+        await client.connect();
+        currentDB = client.db('popfund')
+        businessObjects = []
+        listofBusinesses = currentDB.collection('businesses').find({}, async (err, data) => {
+            await data.forEach(doc => {
+                console.log(`doc lat: ${doc.lat}`);
+                console.log(`doc long: ${doc.long}`);
+                console.log(`doc: ${doc}`)
+                businessObjects.push(doc);
+            });
+            //made asynchronous
+            console.log(businessObjects);
+            res.send(businessObjects);
+        })
 
-    // 1. get the latitude and longitude passed in from frontend through url params : DONE ABOVE
-    // 2. loop through all the business records in businesses collection // Require looking into MONGO documentation
-    // 3.   for each of these businesses euclidean distance
-    // 4.   if euclidean distance < threshold: add that business to a list
-    // 5. Wrap the list in json format // JSON library + dictionaries/objects in JS
-    // 6. res.send(json_formatted_response)
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+
 });
 
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
