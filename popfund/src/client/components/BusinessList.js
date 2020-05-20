@@ -6,7 +6,22 @@ import Truncate from 'react-truncate'
 
 
 class BusinessList extends Component {
-    
+
+    constructor(props) {
+        super(props);
+        this.state = {listData:[]};
+    }
+
+    componentDidMount() {
+        const that = this;
+        fetch('/api/getBusinesses')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                that.setState({listData: data});
+            });
+    }
+
     renderBusiness = (business, idx) => {
         return (
             <Box className="listItem" border={0.5} borderRadius={12} borderColor="grey.300">
@@ -53,7 +68,7 @@ class BusinessList extends Component {
         return (
             <div style={listStyle.listContainer}>
                 <FlatList 
-                    list={exampleListData} 
+                    list={this.state.listData} 
                     renderItem={this.renderBusiness}
                 />
             </div>
