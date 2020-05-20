@@ -27,32 +27,33 @@ class BusinessList extends Component {
             <Box className="listItem" border={0.5} borderRadius={12} borderColor="grey.300">
             <a style={{textDecoration: "none", color: "black"}} href={business.businessPageLink}>
                 <div style={{ display: "flex"}}>
-                    <div /* Business Image */ style={{width: '26%'}}> 
-                        <img style={{width:150, height: 150, objectFit: "cover", borderRadius: 10}} 
+                    <div /* Business Image */ className="imageBlock"> 
+                        <img className="squareImg"
                             src={business.coverImage} 
                         alt="Business picture"/>
                     </div>
 
-                    <div style={{flexGrow: 1, marginRight: 50, width: 300}}>
+                    <div className="metaBlock">
                         <p className="businessName"> 
                             {business.name} 
                         </p>
-                        <p style={{lineHeight: 0, fontSize: 15, marginBottom: 30}}>
-                            <div style={{float: "left", marginRight: 30}}>
+                        <p>
+                            <div className="businessRating">
                                 Rating
                             </div>
-                            <div style={{flexGrow: 1, paddingLeft: 20, width: 100, marginLeft: 40, color: "grey"}}>
+                            <div className="businessDis">
                                 0.3 mi
                             </div>
                         </p>
+                    
                         <Truncate className="businessDescription" lines={2} ellipsis={<span>... <a style={{color: "darkorchid"}} href='/link/to/article'>more</a></span>}>
                             A description or example review should fill up the rest of this area.
                             I love this place, they sell amazing things here, it's like no other. 
-                            The furniture they sell here is of the highest quality. M
+                            The furniture they sell here is of the highest quality.
                         </Truncate>
                     </div>
 
-                    <div className="contactInfo">
+                    <div style={{flexGrow: 1}} className="contactInfo">
                         <p>Phone Number</p>
                         <p>Address Line</p>
                         <p>City</p>
@@ -83,7 +84,7 @@ class BusinessList extends Component {
 const listStyle = {
     listContainer: {
         flex: 1,
-        width: 800,
+        width: "45%",
         marginTop: 50,
         marginLeft: 50,
         marginBottom: 100,
