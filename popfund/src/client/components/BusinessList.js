@@ -3,7 +3,7 @@ import FlatList from 'flatlist-react';
 import './BusinessList.css'
 import { Box } from '@material-ui/core';
 import Truncate from 'react-truncate'
-
+import BusinessPage from './BusinessPage.js'
 
 class BusinessList extends Component {
 
@@ -27,15 +27,15 @@ class BusinessList extends Component {
             <Box className="listItem" border={0.5} borderRadius={12} borderColor="grey.300">
             <a style={{textDecoration: "none", color: "black"}} href={business.businessPageLink}>
                 <div style={{ display: "flex"}}>
-                    <div /* Business Image */ style={{width: '26%'}}> 
-                        <img style={{width:150, height: 150, objectFit: "cover", borderRadius: 10}} 
-                            src={business.coverImage} 
+                    <div /* Business Image */ style={{width: '26%'}}>
+                        <img style={{width:150, height: 150, objectFit: "cover", borderRadius: 10}}
+                            src={business.coverImage}
                         alt="Business picture"/>
                     </div>
 
                     <div style={{flexGrow: 1, marginRight: 50, width: 300}}>
-                        <p className="businessName"> 
-                            {business.name} 
+                        <p className="businessName">
+                            {business.name}
                         </p>
                         <p style={{lineHeight: 0, fontSize: 15, marginBottom: 30}}>
                             <div style={{float: "left", marginRight: 30}}>
@@ -47,7 +47,7 @@ class BusinessList extends Component {
                         </p>
                         <Truncate className="businessDescription" lines={2} ellipsis={<span>... <a style={{color: "darkorchid"}} href='/link/to/article'>more</a></span>}>
                             A description or example review should fill up the rest of this area.
-                            I love this place, they sell amazing things here, it's like no other. 
+                            I love this place, they sell amazing things here, it's like no other.
                             The furniture they sell here is of the highest quality. M
                         </Truncate>
                     </div>
@@ -117,25 +117,25 @@ const exampleListData = [
       id: '0',
       name: 'Chipotle',
       coverImage: "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350",
-      businessPageLink: "https://www.my.ucla.edu"
+      businessPageLink: "/BusinessPage"
     },
     {
       id: '1',
       name: 'Subway',
       coverImage: "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350",
-      businessPageLink: "https://www.my.ucla.edu"
+      businessPageLink: "/BusinessPage"
     },
     {
       id: '2',
       name: 'Antique Store',
       coverImage: "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350",
-      businessPageLink: "https://www.my.ucla.edu"
+      businessPageLink: "/BusinessPage"
     },
     {
       id: '3',
       name: 'Jack In The Box',
       coverImage: "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350",
-      businessPageLink: "https://www.my.ucla.edu"
+      businessPageLink: "/BusinessPage"
     }
   ];
 
