@@ -3,13 +3,72 @@ import FlatList from 'flatlist-react';
 import './BusinessList.css'
 import { Box } from '@material-ui/core';
 import Truncate from 'react-truncate'
+import { GoogleMap, useLoadScript, Marker, InfoWindow, MarkerClusterer } from "@react-google-maps/api";
+import TextField from '@material-ui/core/TextField';
+import { shadows } from '@material-ui/system';
+import logo from './purple-42887_1280.png';
+import mapStyles from './mapStyles'
 import BusinessPage from './BusinessPage.js'
+
+
+const libraries = ["places"];
+const mapContainerStyle = {
+    height: "75vh",
+    width: "46vw",
+};
+const mapOptions = {
+    styles: mapStyles,
+}
+const center = {
+    lat: 34,
+    lng: -118,
+  };
+
+var businessCoords = [];
+
+function addMarkers(list) {
+    for (let index = 0; index < list.length; index++) {
+        <Marker
+            position={{ lat: list[i].lat, lng: list[i].long }}
+            name={"hello"}
+        />
+    }
+
+}
+
+function Map1(list) {
+    const { isLoaded, loadError } = useLoadScript({
+        googleMapsApiKey: "AIzaSyCB3kuQ8YdaOzKzRF58--PKV32EJZvHWfI",
+        libraries,
+      });
+    
+    if (loadError) return "Error";
+    if (!isLoaded) return "Loading...";
+    
+    return (
+        <div>
+            <GoogleMap 
+                mapContainerStyle={mapContainerStyle}
+                zoom={14}
+                center={center}
+                options={mapOptions}
+            >
+
+
+            </GoogleMap>
+        </div>
+    )
+}
 
 class BusinessList extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {listData:[]};
+        this.state = {
+            listData:[],
+            street: "yessir",
+            city: "West"
+        };
     }
 
     componentDidMount() {
@@ -22,119 +81,108 @@ class BusinessList extends Component {
             });
     }
 
+    addBizCoord(biz) {
+        var latTEMP = biz.lat;
+        var longTEMP = biz.long;
+        var coord = [latTEMP, longTEMP];
+        businessCoords.push(coord);
+    }
+    
+    parseAdd(biz) {
+        var full = biz.address.split(",");
+        if(full.length > 1) {
+            this.state.street = full[0];
+            this.state.city = full[1];
+        }
+    }
+
     renderBusiness = (business, idx) => {
         return (
-            <Box className="listItem" border={0.5} borderRadius={12} borderColor="grey.300">
-            <a style={{textDecoration: "none", color: "black"}} href={'/businessPage?id=' + business._id}>
-                <div style={{ display: "flex"}}>
-                    <div /* Business Image */ style={{width: '26%'}}>
-                        <img style={{width:150, height: 150, objectFit: "cover", borderRadius: 10}}
-                            src={business.coverImage}
+            <div className="listItem">
+                {this.addBizCoord(business)}
+            <a style={{textDecoration: "none", color: "black"}} href={business.businessPageLink}>
+                <div style={{ display: "flex"}} className="listitem">
+                    <div /* Business Image */ className="imageBlock"> 
+                        <img className="squareImg"
+                            src={business.coverImage} 
                         alt="Business picture"/>
                     </div>
 
-                    <div style={{flexGrow: 1, marginRight: 50, width: 300}}>
-                        <p className="businessName">
-                            {business.name}
+                    <div className="metaBlock">
+                        <p className="businessName"> 
+                            {business.name} 
                         </p>
-                        <p style={{lineHeight: 0, fontSize: 15, marginBottom: 30}}>
-                            <div style={{float: "left", marginRight: 30}}>
+                        <p>
+                            <div className="businessRating">
                                 Rating
                             </div>
-                            <div style={{flexGrow: 1, paddingLeft: 20, width: 100, marginLeft: 40, color: "grey"}}>
+                            <div className="businessDis">
                                 0.3 mi
                             </div>
                         </p>
-                        <Truncate className="businessDescription" lines={2} ellipsis={<span>... <a style={{color: "darkorchid"}} href='/link/to/article'>more</a></span>}>
-                            {business.description}
-                        </Truncate>
+                            <p className="businessDescription">
+                                {business.description}
+                            </p>
                     </div>
 
-                    <div className="contactInfo">
+                    <div className="contactInfo" style={{flexGrow: 1}}>
                         <p>{business.phoneNumber}</p>
-                        <p>{business.Address}</p>
+                        <p>
+                            {this.parseAdd(business)}
+                            {this.state.street}
+                        </p>
+                        <p>{this.state.city}</p>
                     </div>
 
                 </div>
             </a>
-            </Box>
+            </div>
         );
       }
 
     render() {
         return (
-            <div style={listStyle.listContainer}>
-                <FlatList
-                    list={this.state.listData}
-                    renderItem={this.renderBusiness}
-                />
+            <div className="all">
+                <div className="upper">
+                    <div>
+                        <img className="heart" src={logo} />
+                    </div>
+                    <div className="positionSearch">
+                        <div className="searchBar">
+                            <Box boxShadow={5} borderRadius={4} sizeHeight={5}>
+                                <TextField size={"large"} fullWidth id="outlined-search" placeholder="Find sushi, barber, fat sal's... " type="search" variant="outlined" />
+                            </Box>
+                        </div>
+                    </div>
+                    <p className="options">
+                        <div style={{float: "left"}}>
+                           <a class="optLink" href="">Add a Business</a>
+                        </div>
+                        <div style={{float: "right"}}>
+                            <a class="optLink" href="">Donate!</a>
+                        </div>
+                    </p>
+                </div>
+
+                <div className="contentBlock">
+       
+                    <div className="list">
+                        <FlatList 
+                            list={this.state.listData} 
+                            renderItem={this.renderBusiness}
+                        />
+                    <div class="grad">
+                    </div>
+                     
+                    </div>
+                    <div className="map">
+                        <Map1 />
+                    </div>
+                </div>
             </div>
         );
     }
 }
-
-
-
-
-
-const listStyle = {
-    listContainer: {
-        flex: 1,
-        width: 800,
-        marginTop: 50,
-        marginLeft: 50,
-        marginBottom: 100,
-    },
-    item: {
-        margin: 10,
-        padding: 20,
-        fontSize: 18,
-        borderWidth: 1.5,
-        borderRadius: 7.5,
-        borderColor: '#FBE9F4',
-    },
-    businessName: {
-        fontFamily: "Open Sans",
-        fontSize: 27
-    },
-    businessImg: {
-        height: 50,
-        width: 50
-      },
-    addressPhoneCity: {
-    color: 'black',
-    fontSize: 14,
-    textAlign: "left"
-    },
-
-}
-
-const exampleListData = [
-    {
-      id: '0',
-      name: 'Chipotle',
-      coverImage: "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350",
-      businessPageLink: "/businessPage"
-    },
-    {
-      id: '1',
-      name: 'Subway',
-      coverImage: "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350",
-      businessPageLink: "/businessPage"
-    },
-    {
-      id: '2',
-      name: 'Antique Store',
-      coverImage: "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350",
-      businessPageLink: "/businessPage"
-    },
-    {
-      id: '3',
-      name: 'Jack In The Box',
-      coverImage: "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350",
-      businessPageLink: "/businessPage"
-    }
-  ];
 
 
 export default BusinessList;
