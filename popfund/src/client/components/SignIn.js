@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -46,13 +46,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function handleSubmit() {
-    // handle submit here
-    console.log('handling submit');
-}
-
 export default function SignIn() {
   const classes = useStyles();
+  const [values, setValues] = useState({email: '', password: ''});
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('submitting');
+    console.log(values);
+  }
+
+  const handleInputChange = e => {
+    const {name, value} = e.target;
+    setValues({...values, [name]: value});
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -74,6 +81,8 @@ export default function SignIn() {
             label="Email Address"
             name="email"
             autoComplete="email"
+            value={values.email}
+            onChange={handleInputChange}
             autoFocus
           />
           <TextField
@@ -86,6 +95,8 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={values.password}
+            onChange={handleInputChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

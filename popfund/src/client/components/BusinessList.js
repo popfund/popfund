@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import { shadows } from '@material-ui/system';
 import logo from './purple-42887_1280.png';
 import mapStyles from './mapStyles'
+import BusinessPage from './BusinessPage.js'
 
 
 const libraries = ["places"];
@@ -59,8 +60,6 @@ function Map1(list) {
     )
 }
 
-
-
 class BusinessList extends Component {
 
     constructor(props) {
@@ -74,7 +73,7 @@ class BusinessList extends Component {
 
     componentDidMount() {
         const that = this;
-        fetch('/api/getBusinesses')
+        fetch('/api/getBusinesses'+"?lat=37&long=-122&distance=20000")
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -163,9 +162,7 @@ class BusinessList extends Component {
                             <a class="optLink" href="">Donate!</a>
                         </div>
                     </p>
-
                 </div>
-
 
                 <div className="contentBlock">
        
