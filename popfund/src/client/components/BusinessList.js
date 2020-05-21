@@ -25,7 +25,7 @@ class BusinessList extends Component {
     renderBusiness = (business, idx) => {
         return (
             <Box className="listItem" border={0.5} borderRadius={12} borderColor="grey.300">
-            <a style={{textDecoration: "none", color: "black"}} href={business.businessPageLink}>
+            <a style={{textDecoration: "none", color: "black"}} href={'/businessPage?id=' + business._id}>
                 <div style={{ display: "flex"}}>
                     <div /* Business Image */ style={{width: '26%'}}>
                         <img style={{width:150, height: 150, objectFit: "cover", borderRadius: 10}}
@@ -67,8 +67,8 @@ class BusinessList extends Component {
     render() {
         return (
             <div style={listStyle.listContainer}>
-                <FlatList 
-                    list={this.state.listData} 
+                <FlatList
+                    list={this.state.listData}
                     renderItem={this.renderBusiness}
                 />
             </div>
@@ -117,25 +117,25 @@ const exampleListData = [
       id: '0',
       name: 'Chipotle',
       coverImage: "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350",
-      businessPageLink: "/BusinessPage"
+      businessPageLink: "/businessPage"
     },
     {
       id: '1',
       name: 'Subway',
       coverImage: "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350",
-      businessPageLink: "/BusinessPage"
+      businessPageLink: "/businessPage"
     },
     {
       id: '2',
       name: 'Antique Store',
       coverImage: "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350",
-      businessPageLink: "/BusinessPage"
+      businessPageLink: "/businessPage"
     },
     {
       id: '3',
       name: 'Jack In The Box',
       coverImage: "https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=350",
-      businessPageLink: "/BusinessPage"
+      businessPageLink: "/businessPage"
     }
   ];
 
