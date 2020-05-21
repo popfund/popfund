@@ -65,7 +65,7 @@ app.get('/api/getBusinesses', async (req, res) => {
     try {
         await client.connect();
         currentDB = client.db('popfund')
-        businessObjects = []
+        let businessObjects = []
         listofBusinesses = currentDB.collection('businesses').find({}, async (err, data) => {
             await data.forEach(doc => {
                 businessObjects.push(doc);
@@ -82,5 +82,30 @@ app.get('/api/getBusinesses', async (req, res) => {
     }
 
 });
+
+
+//businessPage?id=20380
+app.get('/api/businessPage', async (req, res) => {
+    const reqID = req.query.id;
+    const mongo_uri = 'mongodb+srv://genuser:popfund@popfund-cluster-jxrtb.mongodb.net/test?retryWrites=true&w=majority';
+    const client = new MongoClient(mongo_uri);
+    var ObjectId = require('mongodb').ObjectID;
+    try {
+        await client.connect();
+        currentDB = client.db('popfund')
+        collection = currentDB.collection('businesses')
+        oid = new ObjectId(reqID.toString())
+        businessObjects = await collection.findOne({ _id : oid });
+            //made asynchronous
+        console.log(businessObjects);
+        res.send(businessObjects);
+        
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+});
+
 
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
