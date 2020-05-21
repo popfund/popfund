@@ -46,16 +46,13 @@ class BusinessList extends Component {
                             </div>
                         </p>
                         <Truncate className="businessDescription" lines={2} ellipsis={<span>... <a style={{color: "darkorchid"}} href='/link/to/article'>more</a></span>}>
-                            A description or example review should fill up the rest of this area.
-                            I love this place, they sell amazing things here, it's like no other.
-                            The furniture they sell here is of the highest quality. M
+                            {business.description}
                         </Truncate>
                     </div>
 
                     <div className="contactInfo">
-                        <p>Phone Number</p>
-                        <p>Address Line</p>
-                        <p>City</p>
+                        <p>{business.phoneNumber}</p>
+                        <p>{business.Address}</p>
                     </div>
 
                 </div>
