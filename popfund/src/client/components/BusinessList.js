@@ -100,7 +100,7 @@ class BusinessList extends Component {
         return (
             <div className="listItem">
                 {this.addBizCoord(business)}
-            <a style={{textDecoration: "none", color: "black"}} href={business.businessPageLink}>
+            <a style={{textDecoration: "none", color: "black"}} href={'/businessPage?id=' + business._id}>
                 <div style={{ display: "flex"}} className="listitem">
                     <div /* Business Image */ className="imageBlock"> 
                         <img className="squareImg"

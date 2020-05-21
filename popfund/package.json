@@ -15,6 +15,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.14",
     "@material-ui/icons": "^4.9.1",
+    "@react-google-maps/api": "^1.9.1",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.5.0",
     "express": "^4.16.3",
