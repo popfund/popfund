@@ -14,7 +14,7 @@ class BusinessList extends Component {
 
     componentDidMount() {
         const that = this;
-        fetch('/api/getBusinesses')
+        fetch('/api/getBusinesses'+"?lat=37&long=-122&distance=20000")
             .then(res => res.json())
             .then(data => {
                 console.log(data);
