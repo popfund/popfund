@@ -11,3 +11,12 @@
 .Home .lander p {
     color: #999;
 }
+
+.div::-webkit-scrollbar {
+    display: none;
+}
+
+.div {
+    -ms-overflow-style: none;
+}
+  
