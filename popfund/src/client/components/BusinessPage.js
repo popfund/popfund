@@ -5,7 +5,7 @@ import { Box } from '@material-ui/core';
 import Truncate from 'react-truncate'
 import './BusinessPage.css'
 import { withRouter } from 'react-router-dom';
-import queryString from 'query-string';
+//import queryString from 'query-string';
 
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
@@ -22,10 +22,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 
-const url = window.location.href;
-const id = url.substring(38);
-console.log("I got the ID:");
-console.log(id);
+var qs = require('qs');
 
 function Copyright() {
   return (
@@ -173,6 +170,8 @@ class BusinessList extends Component {
   constructor(props) {
       super(props);
       this.state = {businessData:[]};
+      //console.log(this.props.match.params.id);
+      console.log(qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).id)
   }
 
 
