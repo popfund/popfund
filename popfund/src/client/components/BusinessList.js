@@ -199,7 +199,8 @@ class BusinessList extends Component {
     renderBusiness = (business, idx) => {
         return (
             <div className="listItem">
-            <a style={{textDecoration: "none", color: "black"}} href={business.businessPageLink}>
+                {this.addBizCoord(business)}
+            <a style={{textDecoration: "none", color: "black"}} href={'/businessPage?id=' + business._id}>
                 <div style={{ display: "flex"}} className="listitem">
                     <div /* Business Image */ className="imageBlock"> 
                         <img className="squareImg"
