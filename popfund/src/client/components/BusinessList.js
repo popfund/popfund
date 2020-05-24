@@ -43,7 +43,7 @@ function Map1(props) {
         googleMapsApiKey: "AIzaSyCB3kuQ8YdaOzKzRF58--PKV32EJZvHWfI",
         libraries,
       });
-    
+
     const [selected, setSelected] = React.useState(null);
 
     if (loadError) return "Error";
@@ -57,17 +57,17 @@ function Map1(props) {
     }
 
 
-    
+
 
 
     return (
         <div>
-            <GoogleMap 
+            <GoogleMap
                 mapContainerStyle={mapContainerStyle}
                 zoom={14}
                 center={center}
                 options={mapOptions}
-            >               
+            >
                  {businessCoords.map((value, index) => {
                     return <Marker
                         position={{ lat: parseFloat(value[0]), lng: parseFloat(value[1]) }}
@@ -79,11 +79,11 @@ function Map1(props) {
                         }}
                         onMouseLeave={() => { setSelected(null); }}
                         >
-                        
+
                     </Marker>
                 })}
 
-                
+
 
                 <Marker
                     position={{lat: curLat, lng: curLng}}>
@@ -92,7 +92,7 @@ function Map1(props) {
 
 
                 {selected ? (
-                    <InfoWindow 
+                    <InfoWindow
                         position={{ lat: parseFloat(selected[0]) + 0.0001, lng: parseFloat(selected[1]) }}
                         onCloseClick={() => { setSelected(null); }}
                     >
@@ -100,7 +100,7 @@ function Map1(props) {
                             <img className="mapImage" src={selected[3]} />
                             {selected[2]}
                         </div>
-                    </InfoWindow>) 
+                    </InfoWindow>)
                 : null}
 
             </GoogleMap>
@@ -134,7 +134,7 @@ class BusinessList extends Component {
             });
     }
 
-    
+
     parseAdd(biz) {
         var full = biz.address.split(",");
         if(full.length > 1) {
@@ -168,13 +168,13 @@ class BusinessList extends Component {
             var end = {
                 latitude: parseFloat(value.lat),
                 longitude: parseFloat(value.long)
-            } 
+            }
             var dis = haversine(start, end, {unit: 'mile'});
             bizAndDis.push([value, dis]);
         }
 
         console.log(bizAndDis);
-        
+
         // Sort tuple/arr based on distance
         var len = bizAndDis.length;
         for(var i = len-1; i>=0; i--) {
@@ -191,7 +191,7 @@ class BusinessList extends Component {
               }
         }
         console.log(this.state.listData);
-        
+
 
 
     }
@@ -199,18 +199,17 @@ class BusinessList extends Component {
     renderBusiness = (business, idx) => {
         return (
             <div className="listItem">
-                {this.addBizCoord(business)}
             <a style={{textDecoration: "none", color: "black"}} href={'/businessPage?id=' + business._id}>
                 <div style={{ display: "flex"}} className="listitem">
-                    <div /* Business Image */ className="imageBlock"> 
+                    <div /* Business Image */ className="imageBlock">
                         <img className="squareImg"
-                            src={business.coverImage} 
+                            src={business.coverImage}
                         alt="Business picture"/>
                     </div>
 
                     <div className="metaBlock">
-                        <p className="businessName"> 
-                            {business.name} 
+                        <p className="businessName">
+                            {business.name}
                         </p>
                         <p>
                             <div className="businessRating">
@@ -249,16 +248,16 @@ class BusinessList extends Component {
                     </div>
                     <div className="positionSearch">
                         <div className="searchBar">
-                            
-                                <TextField 
-                                    size={"small"} 
-                                    fullWidth id="outlined-search" 
+
+                                <TextField
+                                    size={"small"}
+                                    fullWidth id="outlined-search"
                                     style={{border: 'none'}}
                                     variant="outlined"
                                     color='black'
-                                    placeholder="Find sushi, barber, fat sal's... " 
+                                    placeholder="Find sushi, barber, fat sal's... "
                                     type="search"
-                                    
+
                                     onKeyPress={(ev) => {
                                         console.log(`Pressed keyCode ${ev.key}`);
                                         if (ev.key === 'Enter') {
@@ -267,7 +266,7 @@ class BusinessList extends Component {
                                         }
                                       }}
                                 />
-                            
+
                         </div>
                     </div>
                     <p className="options">
@@ -283,16 +282,16 @@ class BusinessList extends Component {
 
 
                 <div className="contentBlock">
-       
+
                     <div className="list">
                         {this.sortBusinesses()}
-                        <FlatList 
-                            list={this.state.listData} 
+                        <FlatList
+                            list={this.state.listData}
                             renderItem={this.renderBusiness}
                         />
                     <div class="grad">
                     </div>
-                     
+
                     </div>
                     <div className="map">
                         {console.log(this.state.listData)}
