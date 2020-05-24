@@ -56,6 +56,10 @@ function Map1(props) {
         businessCoords.push([value.lat, value.long, value.name, value.coverImage])
     }
 
+var startingPoint = {
+  lat: curLat,
+  lng: curLng,
+};
 
 
 
@@ -65,7 +69,7 @@ function Map1(props) {
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
                 zoom={14}
-                center={center}
+                center={startingPoint}
                 options={mapOptions}
             >
                  {businessCoords.map((value, index) => {
