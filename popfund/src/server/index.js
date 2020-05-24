@@ -89,7 +89,7 @@ app.get('/api/getBusinesses', async (req, res) => {
 
 
 //businessPage?id=20380
-app.get('/api/businessPage', async (req, res) => {
+app.get('/api/getBusinessPage', async (req, res) => {
     const reqID = req.query.id;
     const mongo_uri = 'mongodb+srv://genuser:popfund@popfund-cluster-jxrtb.mongodb.net/test?retryWrites=true&w=majority';
     const client = new MongoClient(mongo_uri);

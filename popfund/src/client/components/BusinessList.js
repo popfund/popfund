@@ -130,6 +130,7 @@ class BusinessList extends Component {
 
     componentDidMount() {
         const that = this;
+        // need to add curlat and curlong here
         fetch('/api/getBusinesses'+"?lat=37&long=-122&distance=20000")
             .then(res => res.json())
             .then(data => {

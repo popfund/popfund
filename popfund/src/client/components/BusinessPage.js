@@ -169,9 +169,19 @@ class BusinessList extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {businessData:[]};
+      this.state = {address:'', businessPageLink:'', coverImage:'', name:'', phoneNumber:'', items:[]};
       //console.log(this.props.match.params.id);
-      console.log(qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).id)
+  }
+
+  componentDidMount() {
+    let id = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).id;
+    const that = this;
+    fetch('/api/getBusinessPage'+'?id='+id)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        that.setState({address: data.address, businessPageLink: data.businessPageLink, coverImage: data.coverImage, name: data.name, phoneNumber: data.phoneNumber, items: data.saleItems})
+      });
   }
 
 
