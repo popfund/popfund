@@ -48,6 +48,8 @@ connectDB().catch(console.error);
 const app = express();
 
 app.use(express.static('dist'));
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 // List of APIS
 app.get('/', (req, res) => res.send('GET request to the homepage'));
@@ -111,5 +113,10 @@ app.get('/api/getBusinessPage', async (req, res) => {
     }
 });
 
+app.post('/api/login', (req, res) => {
+    console.log('request body');
+    console.log(req.body);
+    res.send('POST request to login page');
+})
 
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
