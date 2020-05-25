@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+//const bcrypt = require('bcrypt');
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -54,6 +56,24 @@ export default function SignIn() {
     e.preventDefault();
     console.log('submitting');
     console.log(values);
+    var bcrypt = require('bcryptjs');
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(values.password, salt);
+    var data = {email: values.email, password: hash};
+    console.log('data sent');
+    console.log(data);  
+    fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => console.log(res))
+      /*
+      .then(data => {
+        console.log(data);
+      })*/
   }
 
   const handleInputChange = e => {
