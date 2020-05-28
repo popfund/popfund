@@ -2,6 +2,7 @@ const express = require('express');
 const os = require('os');
 
 const {MongoClient} = require('mongodb');
+const mongo_uri = 'mongodb+srv://genuser:popfund@popfund-cluster-jxrtb.mongodb.net/test?retryWrites=true&w=majority';
 
 async function listDatabases(client){
     databasesList = await client.db().admin().listDatabases();
@@ -62,7 +63,6 @@ app.get('/api/getBusinesses', async (req, res) => {
     const distance = req.query.distance;
     console.log(`lat: ${lat}`);
     console.log(`long: ${long}`);
-    const mongo_uri = 'mongodb+srv://genuser:popfund@popfund-cluster-jxrtb.mongodb.net/test?retryWrites=true&w=majority';
     const client = new MongoClient(mongo_uri);
     try {
         await client.connect();
@@ -93,7 +93,6 @@ app.get('/api/getBusinesses', async (req, res) => {
 //businessPage?id=20380
 app.get('/api/getBusinessPage', async (req, res) => {
     const reqID = req.query.id;
-    const mongo_uri = 'mongodb+srv://genuser:popfund@popfund-cluster-jxrtb.mongodb.net/test?retryWrites=true&w=majority';
     const client = new MongoClient(mongo_uri);
     var ObjectId = require('mongodb').ObjectID;
     try {
@@ -113,10 +112,43 @@ app.get('/api/getBusinessPage', async (req, res) => {
     }
 });
 
-app.post('/api/login', (req, res) => {
+const bcrypt = require('bcrypt');
+
+app.post('/api/login', async (req, res) => {
     console.log('request body');
     console.log(req.body);
-    res.send('POST request to login page');
+    email = req.body.email;
+    password = req.body.password;
+    const client = new  MongoClient(mongo_uri);
+    try {
+        await client.connect();
+        currentDB = client.db('popfund');
+        users = currentDB.collection('users');
+        matchingUser = await users.findOne({email: email});
+        hashedPassword = matchingUser.password;
+        console.log(matchingUser);
+        bcrypt.compare(password, hashedPassword).then((result) => {
+            console.log(result);
+            if (result) {
+                // passwords matching
+                console.log('sending ok')
+                res.status(200);
+                return res.send({'_id': matchingUser._id, name: matchingUser.name});
+            } else {
+                // passwords not matching
+                res.status(401);
+                return res.send();
+            }
+        });
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+    /*
+    res.status(500);
+    res.send('something terribly wrong has occured.');
+    */
 })
 
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
