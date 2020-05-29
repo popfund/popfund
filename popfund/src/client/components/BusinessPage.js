@@ -104,7 +104,7 @@ const styles = theme => ({
   },
 });
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+//const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 
 
@@ -112,9 +112,10 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 class BusinessPage extends Component {
 
 
+
   constructor(props) {
       super(props);
-      this.state = {address:'', description: '', businessPageLink:'', coverImage:'', name:'', phoneNumber:'', items:[]};
+      this.state = {keywords:[], address:'', description: '', businessPageLink:'', coverImage:'', name:'', phoneNumber:'', items:[]};
       //console.log(this.props.match.params.id);
   }
 
@@ -125,13 +126,16 @@ class BusinessPage extends Component {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        that.setState({address: data.address, description: data.description, businessPageLink: data.businessPageLink, coverImage: data.coverImage, name: data.name, phoneNumber: data.phoneNumber, items: data.saleItems})
+        that.setState({keywords: data.keywords, address: data.address, description: data.description, businessPageLink: data.businessPageLink, coverImage: data.coverImage, name: data.name, phoneNumber: data.phoneNumber, items: data.saleItems})
       });
   }
 
 
   render() {
     const { classes } = this.props;
+    console.log(this.state.keywords);
+    const cards = this.state.keywords;
+    var i = 0; 
     return (
       <React.Fragment>
         <CssBaseline />
@@ -148,13 +152,13 @@ class BusinessPage extends Component {
               <div className={classes.heroButtons}>
                 <Grid container spacing={2} justify="center">
                   <Grid item>
-                    <Button variant="contained" color="primary">
-                      Click here for something
+                    <Button variant="contained" color="primary" href={this.state.businessPageLink}>
+                      Our website
                     </Button>
                   </Grid>
                   <Grid item>
-                    <Button variant="outlined" color="primary">
-                      Click here for something else
+                    <Button variant="outlined" color="primary" href='/donate'>
+                      Click here to donate
                     </Button>
                   </Grid>
                 </Grid>
@@ -169,12 +173,12 @@ class BusinessPage extends Component {
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.cardMedia}
-                      image="https://flatbrokechopsnrods.com/wp-content/uploads/2018/11/blog-ph-9.jpg"
-                      title="Image title"
+                      image={this.state.coverImage}
+                      title={cards[0]}
                     />
                     <CardContent className={classes.cardContent}>
                       <Typography gutterBottom variant="h5" component="h2">
-                        Business
+                        {++i}) {cards[i]} 
                       </Typography>
                       <Typography>
                         This is this.
