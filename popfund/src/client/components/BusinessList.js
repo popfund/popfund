@@ -12,8 +12,8 @@ import mapStyles from './mapStyles'
 import { InputBase } from '@material-ui/core';
 
 
-var curLat = null;
-var curLng = null;
+var curLat = 34.0689;
+var curLng = -118.4452;
 const libraries = ["places"];
 const mapContainerStyle = {
     height: "75vh",
