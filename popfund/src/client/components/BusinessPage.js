@@ -129,7 +129,8 @@ class BusinessPage extends Component {
         that.setState({keywords: data.keywords, address: data.address, description: data.description, businessPageLink: data.businessPageLink, coverImage: data.coverImage, name: data.name, phoneNumber: data.phoneNumber, items: data.saleItems})
       });
   }
-
+//i can probably make a function to handle each card and inside of the loop that renders cards can set a variable equal to the output
+//of that handler function...for now what I have works, I want to wait and see what the array coming from the database will look like
 
   render() {
     const { classes } = this.props;
@@ -157,7 +158,7 @@ class BusinessPage extends Component {
                     </Button>
                   </Grid>
                   <Grid item>
-                    <Button variant="outlined" color="primary" href='/donate'>
+                    <Button variant="outlined" color="primary" href='/donatePage'>
                       Click here to donate
                     </Button>
                   </Grid>
@@ -174,22 +175,22 @@ class BusinessPage extends Component {
                     <CardMedia
                       className={classes.cardMedia}
                       image={this.state.coverImage}
-                      title={cards[0]}
+                      title="This image"
                     />
                     <CardContent className={classes.cardContent}>
                       <Typography gutterBottom variant="h5" component="h2">
                         {++i}) {cards[i]} 
                       </Typography>
                       <Typography>
-                        This is this.
+                        Description of item will go here when in database
                       </Typography>
                     </CardContent>
                     <CardActions>
-                      <Button size="small" color="primary">
-                        Click here
+                      <Button size="small" color="primary" href={this.state.businessPageLink}>
+                        Go To {this.state.name}
                       </Button>
-                      <Button size="small" color="primary">
-                        Click here
+                      <Button size="small" color="primary" href='/donatePage'>
+                        Buy Now
                       </Button>
                     </CardActions>
                   </Card>
