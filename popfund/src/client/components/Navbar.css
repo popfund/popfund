@@ -4,4 +4,31 @@
 
 .color-nav {
     background-color: darkorchid;
+    width: 100%;
+}
+
+.iconArea {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    right: 30px;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.image {
+    height: 30px;
+    width: 45px;
+    padding-left: 15px;
+    margin-top: -3px;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #e3c5f0;
+}
+
+.removeLink {
+    text-decoration: none;
+    color: #cd96e4;
 }
