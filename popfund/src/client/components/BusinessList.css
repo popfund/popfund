@@ -2,12 +2,12 @@
 
 .positionSearch {
     margin-left: 4%;
-    width: 100%;
+    width: 50%;
     background-color: rgb(245, 245, 245);
     float: left;
     border-radius: 0.3em;
     box-shadow: 0.5px 0.5px 0.01vw 0.05vw rgb(218, 218, 218);
-    border: 0.1vw solid darkorchid;
+    border: 0.0vw solid darkorchid;
 }
 
 .positionSearch:hover {
@@ -37,21 +37,18 @@
 }
 
 .options {
-    position: relative;
-    float: right;
-    padding-top: 1%;
+    position: absolute;
+    margin: 0;
+    right: 5%;
+    
     background-color: rgb(231, 232, 233);
     font-family: 'Ubuntu';
-    margin-left: 7%;
-    width: 50%;
-    min-width: 15vw;
-    margin-right: 7%;
-    padding-left: 1%;
 }
 
 .optLink {
     font-family: 'Ubuntu';
     text-align: center;
+    margin-left: 5vw;
     font-size: 1.1em;
     color: darkorchid;
     background-color: rgb(224, 219, 226);
