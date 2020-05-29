@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Navbar.css';
 import { Navbar, Nav, Form, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
+import guestIcon from './guestIcon.png'
+import guestIconWhite from './guestIconWhite.png'
 
 const Navigation = (props) => {
     console.log(props);
+    const [userMessage, setUserMessage] = useState("Guest");  // Change this to "Welcome {username}" once user signs in 
+    const [userImage, setUserImage] = useState(guestIconWhite);  // Change this to user profile image
+
     return (
         <Navbar className='color-nav' variant="dark">
             <Navbar.Brand href="/">popfund</Navbar.Brand>
@@ -13,6 +18,14 @@ const Navigation = (props) => {
                 <Nav className="mr-auto">
                     <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/login">login</Nav.Link>
+                    <Nav.Item className="iconArea">
+                        <div>
+                            <a href="/" className="removeLink">
+                                {userMessage}
+                                <img src={userImage} className="image" />
+                            </a>
+                        </div>
+                    </Nav.Item>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
