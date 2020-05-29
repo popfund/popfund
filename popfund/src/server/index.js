@@ -102,10 +102,24 @@ app.get('/api/getBusinessPage', async (req, res) => {
         oid = new ObjectId(reqID.toString())
         businessObjects = await collection.findOne({ _id : oid });
             //made asynchronous
+        itemList = businessObjects.saleItems
+        collectionItems = currentDB.collection('items')
+        let itemObjects = []
+        if (itemList){
+            const lengthofItems = itemList.length;
+            for(let i = 0; i != lengthofItems; i++){
+                idItem = itemList[i]
+                let itemObject = await collectionItems.findOne({ _id : idItem })
+                itemObjects.push(itemObject)
+            }
+        }
+
+
         // for loop through the items array
         // get by id item
         // build an array of items
         // chnage the current items array to use that instead of the ids
+        businessObjects.saleItems = itemObjects;
         console.log(businessObjects);
         res.send(businessObjects);
         
