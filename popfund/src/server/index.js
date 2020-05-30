@@ -169,4 +169,27 @@ app.post('/api/login', async (req, res) => {
     */
 })
 
+app.post('/api/signup', async (req, res) => {
+    console.log(req.body);
+    let fname = req.body.fname;
+    let lname = req.body.lname;
+    let email = req.body.email;
+    let password = req.body.password;
+    // need to add checking if user exists
+    const client = new MongoClient(mongo_uri);
+    try {
+        await client.connect();
+        currentDB = client.db('popfund');
+        users = currentDB.collection('users');
+        const hash = await bcrypt.hash(password, 10);
+        await users.insertOne({fname: fname, lname: lname, email: email, password: hash});
+        res.status(200);
+        res.send();
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+})
+
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
