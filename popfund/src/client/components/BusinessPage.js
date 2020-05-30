@@ -134,9 +134,9 @@ class BusinessPage extends Component {
 
   render() {
     const { classes } = this.props;
-    console.log(this.state.keywords);
-    const cards = this.state.keywords;
-    var i = 0; 
+    console.log(this.state.items);
+    const cards = this.state.items;
+    var i = -1; 
     return (
       <React.Fragment>
         <CssBaseline />
@@ -174,15 +174,15 @@ class BusinessPage extends Component {
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.cardMedia}
-                      image={this.state.coverImage}
+                      image={cards[i + 1].image}
                       title="This image"
                     />
                     <CardContent className={classes.cardContent}>
                       <Typography gutterBottom variant="h5" component="h2">
-                        {++i}) {cards[i]} 
+                        {++i + 1}) {cards[i].name} 
                       </Typography>
                       <Typography>
-                        Description of item will go here when in database
+                        {cards[i].description} <br></br> <br></br> Price: {cards[i].price}
                       </Typography>
                     </CardContent>
                     <CardActions>
