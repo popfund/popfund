@@ -78,7 +78,8 @@ export default function SignIn() {
           console.log(jsonResponse);
           window.userID = jsonResponse._id;
           window.userEmail = values.email;
-          window.userName = jsonResponse.name;
+          window.userFname = jsonResponse.fname;
+          window.userLname = jsonResponse.lname;
           history.push('/');
         } else if (response === 401){
           //unauthorized access
