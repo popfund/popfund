@@ -151,7 +151,7 @@ app.post('/api/login', async (req, res) => {
                 // passwords matching
                 console.log('sending ok')
                 res.status(200);
-                return res.send({'_id': matchingUser._id, name: matchingUser.name});
+                return res.send({'_id': matchingUser._id, fname: matchingUser.fname, lname: matchingUser.lname, email: matchingUser.email});
             } else {
                 // passwords not matching
                 res.status(401);
