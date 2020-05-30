@@ -8,7 +8,6 @@ import purpMark from './purpMark.png'
 import mapStyles from './mapStyles'
 
 
-
 const libraries = ["places"];
 const mapContainerStyle = {
     height: "75vh",
