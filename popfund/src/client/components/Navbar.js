@@ -7,7 +7,15 @@ import guestIconWhite from './guestIconWhite.png'
 
 const Navigation = (props) => {
     console.log(props);
-    const [userMessage, setUserMessage] = useState("Guest");  // Change this to "Welcome {username}" once user signs in 
+    var userName;
+    console.log(window.userName);
+    if (! window.userName){
+        userName = "Guest";
+    }else{
+        userName = window.userName;
+    }
+    console.log(userName)
+    const [userMessage, setUserMessage] = useState(userName);  // Change this to "Welcome {username}" once user signs in 
     const [userImage, setUserImage] = useState(guestIconWhite);  // Change this to user profile image
 
     return (
@@ -17,11 +25,12 @@ const Navigation = (props) => {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="/login">login</Nav.Link>
+                    <Nav.Link href="/login">Login</Nav.Link>
+                    <Nav.Link href="/signup">Signup</Nav.Link>
                     <Nav.Item className="iconArea">
                         <div>
                             <a href="/" className="removeLink">
-                                {userMessage}
+                                {userName}
                                 <img src={userImage} className="image" />
                             </a>
                         </div>
