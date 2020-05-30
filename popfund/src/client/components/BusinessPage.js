@@ -114,38 +114,40 @@ function Album() {
             </div>
           </Container>
         </div>
-        <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://flatbrokechopsnrods.com/wp-content/uploads/2018/11/blog-ph-9.jpg"
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Business
-                    </Typography>
-                    <Typography>
-                      This is this.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      Click here
-                    </Button>
-                    <Button size="small" color="primary">
-                      Click here
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
+        <div className="removeGrayBox">
+          <Container className={classes.cardGrid} maxWidth="md">
+            {/* End hero unit */}
+            <Grid container spacing={4}>
+              {cards.map((card) => (
+                <Grid item key={card} xs={12} sm={6} md={4}>
+                  <Card className={classes.card}>
+                    <CardMedia
+                      className={classes.cardMedia}
+                      image="https://flatbrokechopsnrods.com/wp-content/uploads/2018/11/blog-ph-9.jpg"
+                      title="Image title"
+                    />
+                    <CardContent className={classes.cardContent}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        Business
+                      </Typography>
+                      <Typography>
+                        This is this.
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button size="small" color="primary">
+                        Click here
+                      </Button>
+                      <Button size="small" color="primary">
+                        Click here
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        </div>
       </main>
       {/* Footer */}
       <footer className={classes.footer}>
