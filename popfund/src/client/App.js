@@ -25,18 +25,35 @@ export default class App extends Component {
 }
 */
 
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Navigation from './components/Navbar';
 import Routes from './Routes';
+import { render } from 'react-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <Navigation />
-      <Routes />
-    </div>
-  );
+export default class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
+    this.state = {
+      mssg: window.userFname
+    }
+  
+  }
+
+  rerenderParentCallback() {
+    this.forceUpdate();
+  }
+
+  render() {
+    return (
+      <div className="App">
+        {console.log("called app.js")}
+        {console.log(this.state.mssg)}
+        <Navigation name={this.state.userName} />
+        <Routes />
+      </div>
+    )
+  }
 }
-
-export default App;

@@ -80,6 +80,7 @@ export default function SignIn() {
           window.userEmail = values.email;
           window.userFname = jsonResponse.fname;
           window.userLname = jsonResponse.lname;
+          window.loading();
           history.push('/');
         } else if (response === 401){
           //unauthorized access
@@ -87,6 +88,7 @@ export default function SignIn() {
         }
       });
   }
+
 
   const handleInputChange = e => {
     const {name, value} = e.target;

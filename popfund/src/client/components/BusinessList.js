@@ -129,14 +129,12 @@ class BusinessList extends Component {
         fetch('/api/getBusinesses'+"?lat=37&long=-122&distance=20000")
             .then(res => res.json())
             .then(data => {
-                console.log('hello')
-                console.log(data);
                 that.setState({listData: data});
             });
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
-                console.log("Latitude is :", position.coords.latitude);
-                console.log("Longitude is :", position.coords.longitude);
+                //console.log("Latitude is :", position.coords.latitude);
+                //console.log("Longitude is :", position.coords.longitude);
                 gLat = position.coords.latitude
                 gLong = position.coords.longitude
             });
@@ -154,8 +152,8 @@ class BusinessList extends Component {
 
     // Sort businesses based on location/distance
     sortBusinesses() {
-        console.log(gLat)
-        console.log(gLong)
+        //console.log(gLat)
+        //console.log(gLong)
 
         // Calculate distance for each business, make tuple of new copied arr and distance
         for (var [index, value] of this.state.listData.entries()) {
