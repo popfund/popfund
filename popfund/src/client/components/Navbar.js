@@ -18,6 +18,18 @@ const Navigation = (props) => {
     const [userMessage, setUserMessage] = useState(userName);  // Change this to "Welcome {username}" once user signs in 
     const [userImage, setUserImage] = useState(guestIconWhite);  // Change this to user profile image
 
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            window.lat1 = position.coords.latitude;
+            window.long1 = position.coords.longitude;
+        });
+    }
+    
+    window.loading = () => {
+        setUserMessage(window.userFname);
+    };
+
+    
     return (
         <Navbar className='color-nav' variant="dark">
             <Navbar.Brand href="/">popfund</Navbar.Brand>
@@ -30,7 +42,7 @@ const Navigation = (props) => {
                     <Nav.Item className="iconArea">
                         <div>
                             <a href="/" className="removeLink">
-                                {userName}
+                                {userMessage}
                                 <img src={userImage} className="image" />
                             </a>
                         </div>

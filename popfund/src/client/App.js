@@ -25,18 +25,34 @@ export default class App extends Component {
 }
 */
 
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Navigation from './components/Navbar';
 import Routes from './Routes';
+import { render } from 'react-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <Navigation />
-      <Routes />
-    </div>
-  );
+export default class App extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+          window.lat1 = position.coords.latitude;
+          window.long1 = position.coords.longitude;
+      });
+    }
+  }
+
+  render() {
+    return (
+      <div className="App">
+        {this.getLocation}
+        <Navigation />
+        <Routes />
+      </div>
+    )
+  }
 }
-
-export default App;
