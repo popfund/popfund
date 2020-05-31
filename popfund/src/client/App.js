@@ -35,12 +35,21 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
-    
+  }
+
+  getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+          window.lat1 = position.coords.latitude;
+          window.long1 = position.coords.longitude;
+      });
+    }
   }
 
   render() {
     return (
       <div className="App">
+        {this.getLocation}
         <Navigation />
         <Routes />
       </div>
