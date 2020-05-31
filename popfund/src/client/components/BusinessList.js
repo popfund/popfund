@@ -21,6 +21,22 @@ const bizAndDis = [];
 var gLat = null
 var gLong = null
 
+const CustomMarker = (props) => {
+    const onMarkerClick = () => {
+        window.location.href = '/businessPage?id=' + props.bizID;
+    };
+
+    return (
+        <Marker 
+            position={{ lat: props.latp, lng: props.longp }}         // parseFloat(value[0]), lng: parseFloat(value[1])
+            name={"hello"}
+            onClick={onMarkerClick}
+            >
+
+        </Marker>
+    );
+};
+
 
 function Map1(props) {
     const { isLoaded, loadError } = useLoadScript({
@@ -39,11 +55,19 @@ function Map1(props) {
     let businessesMap = props.list;
     let businessCoords = [];
 
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            window.lat1 = position.coords.latitude;
+            window.long1 = position.coords.longitude;
+        });
+      }
 
 
     for (var [index, value] of businessesMap.entries()) {
-        businessCoords.push([value.lat, value.long, value.name, value.coverImage])
+        businessCoords.push([value.lat, value.long, value.name, value.coverImage, value._id])
     }
+    
+    console.log("wut")
 
     return (
         <div>
@@ -57,18 +81,7 @@ function Map1(props) {
                 options={mapOptions}
             >
                  {businessCoords.map((value, index) => {
-                    return <Marker
-                        position={{ lat: parseFloat(value[0]), lng: parseFloat(value[1]) }}
-                        name={"hello"}
-                        onMouseOver={() => { setSelected(value); }}
-                        icon={{
-                            url: purpMark,
-                            scaledSize: new window.google.maps.Size(45,43)
-                        }}
-                        onMouseLeave={() => { setSelected(null); }}
-                        >
-
-                    </Marker>
+                    return <CustomMarker bizID={value[4]} latp={parseFloat(value[0])} longp={parseFloat(value[1])} />
                 })}
 
 
@@ -140,8 +153,8 @@ class BusinessList extends Component {
             navigator.geolocation.getCurrentPosition(function(position) {
                 //console.log("Latitude is :", position.coords.latitude);
                 //console.log("Longitude is :", position.coords.longitude);
-                gLat = position.coords.latitude
-                gLong = position.coords.longitude
+                window.lat1 = position.coords.latitude
+                window.long1 = position.coords.longitude
             });
         }
     }
@@ -159,13 +172,21 @@ class BusinessList extends Component {
     sortBusinesses() {
         //console.log(gLat)
         //console.log(gLong)
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                //console.log("Latitude is :", position.coords.latitude);
+                //console.log("Longitude is :", position.coords.longitude);
+                window.lat1 = position.coords.latitude
+                window.long1 = position.coords.longitude
+            });
+        }
 
         // Calculate distance for each business, make tuple of new copied arr and distance
         for (var [index, value] of this.state.listData.entries()) {
             // Calculate euclidean distance
             var start = {
-                latitude: gLat,
-                longitude: gLong
+                latitude: window.lat1,
+                longitude: window.long1
             }
             var end = {
                 latitude: parseFloat(value.lat),
