@@ -187,7 +187,7 @@ class BusinessPage extends Component {
                       <Button size="small" color="primary" href={this.state.businessPageLink}>
                         Go To {this.state.name}
                       </Button>
-                      <Button size="small" color="primary" href='/donatePage'>
+                      <Button size="small" color="primary" href={'/donatePage' + '?id=' + cards[i]._id}>
                         Buy Now
                       </Button>
                     </CardActions>
