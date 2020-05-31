@@ -17,6 +17,13 @@ const Navigation = (props) => {
     console.log(userName)
     const [userMessage, setUserMessage] = useState(userName);  // Change this to "Welcome {username}" once user signs in 
     const [userImage, setUserImage] = useState(guestIconWhite);  // Change this to user profile image
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            window.lat1 = position.coords.latitude;
+            window.long1 = position.coords.longitude;
+        });
+    }
     
     window.loading = () => {
         setUserMessage(window.userFname);

@@ -35,23 +35,13 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
-    this.rerenderParentCallback = this.rerenderParentCallback.bind(this);
-    this.state = {
-      mssg: window.userFname
-    }
-  
-  }
-
-  rerenderParentCallback() {
-    this.forceUpdate();
+    
   }
 
   render() {
     return (
       <div className="App">
-        {console.log("called app.js")}
-        {console.log(this.state.mssg)}
-        <Navigation name={this.state.userName} />
+        <Navigation />
         <Routes />
       </div>
     )

@@ -30,11 +30,16 @@ function Map1(props) {
 
     const [selected, setSelected] = React.useState(null);
 
+    console.log(window.lat1);
+    console.log(window.long1);
+
     if (loadError) return "Error";
     if (!isLoaded) return "Loading...";
 
     let businessesMap = props.list;
     let businessCoords = [];
+
+
 
     for (var [index, value] of businessesMap.entries()) {
         businessCoords.push([value.lat, value.long, value.name, value.coverImage])
@@ -46,8 +51,8 @@ function Map1(props) {
                 mapContainerStyle={mapContainerStyle}
                 zoom={14}
                 center={{
-                    lat: gLat,
-                    lng: gLong,
+                    lat: window.lat1,
+                    lng: window.long1,
                   }}
                 options={mapOptions}
             >
@@ -70,8 +75,8 @@ function Map1(props) {
 
                 <Marker
                     position={{
-                        lat: gLat,
-                        lng: gLong,
+                        lat: window.lat1,
+                        lng: window.long1,
                       }}>
                 </Marker>
 
@@ -112,10 +117,10 @@ class BusinessList extends Component {
             curLng: null,
             dis: null
         };
+
+        
         
     }
-
-
 
     // Fetch buisinesses 
     componentDidMount() {
