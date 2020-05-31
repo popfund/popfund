@@ -12,6 +12,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useHistory } from "react-router-dom";
+
+//const bcrypt = require('bcrypt');
 
 function Copyright() {
   return (
@@ -47,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+  const history = useHistory();
   const classes = useStyles();
   const [values, setValues] = useState({email: '', password: ''});
 
@@ -54,6 +58,34 @@ export default function SignIn() {
     e.preventDefault();
     console.log('submitting');
     console.log(values);
+    var data = {email: values.email, password: values.password};
+    console.log('data sent');
+    console.log(data);  
+    fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(async res => {
+        const response = res.status;
+        console.log(response);
+        if (response === 200){
+          // authorized access
+          const jsonResponse = await res.json();
+          console.log('successfully logged in');
+          console.log(jsonResponse);
+          window.userID = jsonResponse._id;
+          window.userEmail = values.email;
+          window.userFname = jsonResponse.fname;
+          window.userLname = jsonResponse.lname;
+          history.push('/');
+        } else if (response === 401){
+          //unauthorized access
+          console.log('wrong password');
+        }
+      });
   }
 
   const handleInputChange = e => {

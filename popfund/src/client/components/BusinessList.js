@@ -8,7 +8,6 @@ import purpMark from './purpMark.png'
 import mapStyles from './mapStyles'
 
 
-
 const libraries = ["places"];
 const mapContainerStyle = {
     height: "75vh",
@@ -121,6 +120,11 @@ class BusinessList extends Component {
     // Fetch buisinesses 
     componentDidMount() {
         const that = this;
+        console.log('component mounted');
+        console.log(window.userID);
+        console.log(window.userFname);
+        console.log(window.userLname);
+        console.log(window.userEmail);
         // need to add curlat and curlong here
         fetch('/api/getBusinesses'+"?lat=37&long=-122&distance=20000")
             .then(res => res.json())

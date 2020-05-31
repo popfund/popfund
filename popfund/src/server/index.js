@@ -2,6 +2,7 @@ const express = require('express');
 const os = require('os');
 
 const {MongoClient} = require('mongodb');
+const mongo_uri = 'mongodb+srv://genuser:popfund@popfund-cluster-jxrtb.mongodb.net/test?retryWrites=true&w=majority';
 
 async function listDatabases(client){
     databasesList = await client.db().admin().listDatabases();
@@ -48,6 +49,8 @@ connectDB().catch(console.error);
 const app = express();
 
 app.use(express.static('dist'));
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 // List of APIS
 app.get('/', (req, res) => res.send('GET request to the homepage'));
@@ -60,7 +63,6 @@ app.get('/api/getBusinesses', async (req, res) => {
     const distance = req.query.distance;
     console.log(`lat: ${lat}`);
     console.log(`long: ${long}`);
-    const mongo_uri = 'mongodb+srv://genuser:popfund@popfund-cluster-jxrtb.mongodb.net/test?retryWrites=true&w=majority';
     const client = new MongoClient(mongo_uri);
     try {
         await client.connect();
@@ -91,7 +93,6 @@ app.get('/api/getBusinesses', async (req, res) => {
 //businessPage?id=20380
 app.get('/api/getBusinessPage', async (req, res) => {
     const reqID = req.query.id;
-    const mongo_uri = 'mongodb+srv://genuser:popfund@popfund-cluster-jxrtb.mongodb.net/test?retryWrites=true&w=majority';
     const client = new MongoClient(mongo_uri);
     var ObjectId = require('mongodb').ObjectID;
     try {
@@ -101,6 +102,24 @@ app.get('/api/getBusinessPage', async (req, res) => {
         oid = new ObjectId(reqID.toString())
         businessObjects = await collection.findOne({ _id : oid });
             //made asynchronous
+        itemList = businessObjects.saleItems
+        collectionItems = currentDB.collection('items')
+        let itemObjects = []
+        if (itemList){
+            const lengthofItems = itemList.length;
+            for(let i = 0; i != lengthofItems; i++){
+                idItem = itemList[i]
+                let itemObject = await collectionItems.findOne({ _id : idItem })
+                itemObjects.push(itemObject)
+            }
+        }
+
+
+        // for loop through the items array
+        // get by id item
+        // build an array of items
+        // chnage the current items array to use that instead of the ids
+        businessObjects.saleItems = itemObjects;
         console.log(businessObjects);
         res.send(businessObjects);
         
@@ -111,5 +130,66 @@ app.get('/api/getBusinessPage', async (req, res) => {
     }
 });
 
+const bcrypt = require('bcrypt');
+
+app.post('/api/login', async (req, res) => {
+    console.log('request body');
+    console.log(req.body);
+    email = req.body.email;
+    password = req.body.password;
+    const client = new  MongoClient(mongo_uri);
+    try {
+        await client.connect();
+        currentDB = client.db('popfund');
+        users = currentDB.collection('users');
+        matchingUser = await users.findOne({email: email});
+        hashedPassword = matchingUser.password;
+        console.log(matchingUser);
+        bcrypt.compare(password, hashedPassword).then((result) => {
+            console.log(result);
+            if (result) {
+                // passwords matching
+                console.log('sending ok')
+                res.status(200);
+                return res.send({'_id': matchingUser._id, fname: matchingUser.fname, lname: matchingUser.lname, email: matchingUser.email});
+            } else {
+                // passwords not matching
+                res.status(401);
+                return res.send();
+            }
+        });
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+    /*
+    res.status(500);
+    res.send('something terribly wrong has occured.');
+    */
+})
+
+app.post('/api/signup', async (req, res) => {
+    console.log(req.body);
+    let fname = req.body.fname;
+    let lname = req.body.lname;
+    let email = req.body.email;
+    let password = req.body.password;
+    // need to add checking if user exists
+    const client = new MongoClient(mongo_uri);
+    try {
+        await client.connect();
+        currentDB = client.db('popfund');
+        users = currentDB.collection('users');
+        const hash = await bcrypt.hash(password, 10);
+        await users.insertOne({fname: fname, lname: lname, email: email, password: hash});
+        res.status(200);
+        res.send();
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+})
 
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
