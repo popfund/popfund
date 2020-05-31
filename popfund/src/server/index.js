@@ -130,6 +130,26 @@ app.get('/api/getBusinessPage', async (req, res) => {
     }
 });
 
+app.get('/api/getItem', async (req, res) => {
+    const itemID = req.query.id;
+    const client = new MongoClient(mongo_uri);
+    var ObjectID = require('mongodb').ObjectID;
+    try {
+        await client.connect();
+        currentDB = client.db('popfund');
+        items = currentDB.collection('items');
+        oid = new ObjectID(itemID.toString());
+        itemObject = await items.findOne({_id: oid});
+        console.log(itemObject);
+        res.send(itemObject);
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+})
+
+
 const bcrypt = require('bcrypt');
 
 app.post('/api/login', async (req, res) => {
