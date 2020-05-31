@@ -5,4 +5,9 @@
     align-items: center;
     margin: auto;
     width: 100%;
-  }
+}
+
+.removeGrayBox {
+  background-color: white;
+}
+
