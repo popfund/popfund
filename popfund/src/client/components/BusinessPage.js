@@ -164,38 +164,40 @@ class BusinessPage extends Component {
               </div>
             </Container>
           </div>
-          <Container className={classes.cardGrid} maxWidth="md">
-            {/* End hero unit */}
-            <Grid container spacing={4}>
-              {cards.map((card) => (
-                <Grid item key={card} xs={12} sm={6} md={4}>
-                  <Card className={classes.card}>
-                    <CardMedia
-                      className={classes.cardMedia}
-                      image={cards[i + 1].image}
-                      title="This image"
-                    />
-                    <CardContent className={classes.cardContent}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {++i + 1}) {cards[i].name} 
-                      </Typography>
-                      <Typography>
-                        {cards[i].description} <br></br> <br></br> Price: {cards[i].price}
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button size="small" color="primary" href={this.state.businessPageLink}>
-                        Go To {this.state.name}
-                      </Button>
-                      <Button size="small" color="primary" href={'/donatePage' + '?id=' + cards[i]._id}>
-                        Buy Now
-                      </Button>
-                    </CardActions>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-          </Container>
+          <div className="removeGrayBox">
+            <Container className={classes.cardGrid} maxWidth="md">
+              {/* End hero unit */}
+              <Grid container spacing={4}>
+                {cards.map((card) => (
+                  <Grid item key={card} xs={12} sm={6} md={4}>
+                    <Card className={classes.card}>
+                      <CardMedia
+                        className={classes.cardMedia}
+                        image={cards[i + 1].image}
+                        title="This image"
+                      />
+                      <CardContent className={classes.cardContent}>
+                        <Typography gutterBottom variant="h5" component="h2">
+                          {++i + 1}) {cards[i].name} 
+                        </Typography>
+                        <Typography>
+                          {cards[i].description} <br></br> <br></br> Price: {cards[i].price}
+                        </Typography>
+                      </CardContent>
+                      <CardActions>
+                        <Button size="small" color="primary" href={this.state.businessPageLink}>
+                          Go To {this.state.name}
+                        </Button>
+                        <Button size="small" color="primary" href={'/donatePage' + '?id=' + cards[i]._id}>
+                          Buy Now
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+            </Container>
+          </div>
         </main>
         {/* Footer */}
         <footer className={classes.footer}>
