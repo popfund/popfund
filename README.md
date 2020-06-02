@@ -9,4 +9,18 @@ Rishab Jain
 Samuel Alsup  
 Matthew Ruiz  
 
+### Features
+In our application, you can see our three main features. For starters, You can see a list of businesses close to you in our system when you first open up the home page. You can zoom in and out to see what other businesses are there. There is also a search bar, so you can search for a specific business. If you look at the top of the page, you will notice a dark orchid navigation bar that has the buttons: "Home", "Login", and "Signup". Using the "Home" button, you can return to the Business List page. Using the "Login" button, you can login to our system. Using the "Signup" button, you can create an account with us. On the home page, you can click on any of the business cards to direct you to more information about a business including what items they are selling during the pandemic, a link to their website, and how to donate to keep them open. Looking closer at the Item cards, they contain the item's name, a brief description, the price, and a button labeled "Buy Now" that lets you buy the item. The button will take you to a page where you could send a donation to them. 
+
+### How to Run the Program locally:
+1) Clone the entire repository, you can use ```git clone https://github.com/popfund/popfund.git popfund```
+2) run the command ```cd popfund``` to get to the correct directory
+3) After cloning, we'll want to ensure all npm packages are included. Run the following command to ensure this:  
+```npm install --save```  
+4) Run the command ```npm run dev```. This command should automatically open to localhost:3000 on your default browser. If it doesn't, look up localhost:3000 on your deafult browser.
+5) Enjoy!
+
+### How We Built It:
+We used MongoDB Atlas as our database, Node JS and Express for REST APIs, and React on the front end side. We also used Material UI to help make our website look nicer.
+
 &copy; popfund 2020
