@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
@@ -256,10 +256,16 @@ const ELEMENTS_OPTIONS = {
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe('pk_live_CC5xFPZqGvq9J6DRjnti2L8w00WP0kOy2w');
 
-export default function DonatePage() {
+export default class DonatePage extends Component{
 
-    return (
-    <div>
+  constructor(props) {
+    super(props);
+    this.state = {imageURL: '', price: 0.0}
+  }
+
+  render () {
+    return(
+      <div>
         <div className="AppWrapper">
 
           <div className="container">
@@ -281,5 +287,6 @@ export default function DonatePage() {
         </div>
     </div>
     );
+  }
 
 }
