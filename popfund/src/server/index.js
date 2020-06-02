@@ -90,6 +90,25 @@ app.get('/api/getBusinesses', async (req, res) => {
 });
 
 
+app.get('/api/getItem', async (req, res) => {
+    const reqID = req.query.id;
+    const client = new MongoClient(mongo_uri);
+    var ObjectId = require('mongodb').ObjectID;
+    try {
+        await client.connect();
+        currentDB = client.db('popfund')
+        collectionItems = currentDB.collection('items')
+        let oid = new ObjectId(reqID.toString())
+        let itemObject = await collectionItems.findOne({ _id : oid})
+        res.send(itemObject);  
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+});
+
+
 //businessPage?id=20380
 app.get('/api/getBusinessPage', async (req, res) => {
     const reqID = req.query.id;
