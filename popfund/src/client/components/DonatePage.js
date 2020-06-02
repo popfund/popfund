@@ -263,7 +263,7 @@ export default class DonatePage extends Component{
 
   constructor(props) {
     super(props);
-    this.state = {imageURL: '', price: 0.0}
+    this.state = {imageURL: '', price: 0.0, name: '',}
   }
 
   componentDidMount() {
@@ -273,7 +273,7 @@ export default class DonatePage extends Component{
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        that.setState({imageURL: data.image, price: data.price});
+        that.setState({imageURL: data.image, price: data.price, name: data.name});
       })
   }
 
@@ -281,10 +281,13 @@ export default class DonatePage extends Component{
     return(
       <div>
         <div className="AppWrapper">
-
           <div className="container">
             <div className="imgArea">
                 <img className="itemImg" src={this.state.imageURL==='' ? purpMark : this.state.imageURL} />
+                <Typography className="titleForImage" component="h4" variant="h5" align="center" color="textPrimary" gutterBottom>
+                <br></br>
+                {this.state.name}
+              </Typography>
             </div>
             <div className="checkout">
               <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
@@ -292,8 +295,10 @@ export default class DonatePage extends Component{
               </Elements>
             </div>
           </div>
-
         </div>
+        <br></br>
+        <br></br>
+        <br></br>
         <div class="copyright" >
             <div class="center" >
                 <Copyright/>

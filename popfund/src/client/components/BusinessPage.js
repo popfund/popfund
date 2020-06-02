@@ -149,7 +149,7 @@ class BusinessPage extends Component {
                 {this.state.description}
               </Typography>
               <div /* Business Image */ className="imageBlock">
-              <img className="center"
+              <img className="centeredImage"
                             src={this.state.coverImage}
                         alt="Business picture"
                         />

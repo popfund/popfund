@@ -15,7 +15,15 @@
 
 .itemImg {
     position: relative;
-    width: 20rem;
-    height: 20rem;
+    width: 24rem;
+    height: 16rem;
+    object-fit: contain;
+    border-radius: 1.7rem;
+}
+
+.titleForImage {
+    position: relative;
+    width: 24rem;
+    height: 16rem;
     object-fit: cover;
 }
