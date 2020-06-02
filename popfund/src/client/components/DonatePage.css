@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.checkout {
+    float: right;
+    width: 100%;
+}
+
+.imgArea {
+    float: left;
+    width: 100%;
+}
+
+.itemImg {
+    position: relative;
+    width: 20rem;
+    height: 20rem;
+    object-fit: cover;
+}
