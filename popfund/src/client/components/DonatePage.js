@@ -107,7 +107,8 @@ const ResetButton = ({onClick}) => (
   </button>
 );
 
-const CheckoutForm = () => {
+const CheckoutForm = (props) => {
+  console.log(props.price);
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
@@ -225,7 +226,7 @@ const CheckoutForm = () => {
       </fieldset>
       {error && <ErrorMessage>{error.message}</ErrorMessage>}
       <SubmitButton processing={processing} error={error} disabled={!stripe}>
-        Pay $(fill this in)
+        Pay ${props.price}
       </SubmitButton>
     </form>
   );
@@ -256,11 +257,24 @@ const ELEMENTS_OPTIONS = {
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe('pk_live_CC5xFPZqGvq9J6DRjnti2L8w00WP0kOy2w');
 
+var qs = require('qs');
+
 export default class DonatePage extends Component{
 
   constructor(props) {
     super(props);
     this.state = {imageURL: '', price: 0.0}
+  }
+
+  componentDidMount() {
+    let id = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).id;
+    const that = this;
+    fetch('/api/getItem'+'?id='+id)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        that.setState({imageURL: data.image, price: data.price});
+      })
   }
 
   render () {
@@ -270,11 +284,11 @@ export default class DonatePage extends Component{
 
           <div className="container">
             <div className="imgArea">
-                <img className="itemImg" src={purpMark} />
+                <img className="itemImg" src={this.state.imageURL==='' ? purpMark : this.state.imageURL} />
             </div>
             <div className="checkout">
               <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
-                <CheckoutForm />
+                <CheckoutForm price={this.state.price}/>
               </Elements>
             </div>
           </div>
