@@ -21,22 +21,6 @@ const bizAndDis = [];
 var gLat = null
 var gLong = null
 
-const CustomMarker = (props) => {
-    const onMarkerClick = () => {
-        window.location.href = '/businessPage?id=' + props.bizID;
-    };
-
-    return (
-        <Marker 
-            position={{ lat: props.latp, lng: props.longp }}         // parseFloat(value[0]), lng: parseFloat(value[1])
-            name={"hello"}
-            onClick={onMarkerClick}
-            >
-
-        </Marker>
-    );
-};
-
 
 function Map1(props) {
     const { isLoaded, loadError } = useLoadScript({
@@ -81,7 +65,19 @@ function Map1(props) {
                 options={mapOptions}
             >
                  {businessCoords.map((value, index) => {
-                    return <CustomMarker bizID={value[4]} latp={parseFloat(value[0])} longp={parseFloat(value[1])} />
+                    return <Marker
+                                position={{ lat: parseFloat(value[0]), lng: parseFloat(value[1]) }}
+                                name={"hello"}
+                                onMouseOver={() => { setSelected(value); }}
+                                icon={{
+                                    url: purpMark,
+                                    scaledSize: new window.google.maps.Size(45,43)
+                                }}
+                                onMouseLeave={() => { setSelected(null); }}
+                                >
+
+                            </Marker>
+
                 })}
 
 
