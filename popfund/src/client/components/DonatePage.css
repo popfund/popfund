@@ -6,6 +6,11 @@
 .checkout {
     float: right;
     width: 100%;
+    background-color: rgb(241, 246, 250);
+    padding: 1rem;
+    padding-top: 1.0rem;
+    padding-bottom: 1.4rem;
+    border-radius: 1.7rem;
 }
 
 .imgArea {
@@ -18,4 +23,12 @@
     width: 20rem;
     height: 20rem;
     object-fit: cover;
+}
+
+.payWith {
+    text-align: center;
+    padding-bottom: 0.14rem;
+    font-size: 0.8em;
+    color: rgb(193, 192, 192);
+    font-family: Roboto, Open Sans, Segoe UI, sans-serif;
 }

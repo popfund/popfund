@@ -17,8 +17,8 @@ const CARD_OPTIONS = {
   iconStyle: 'solid',
   style: {
     base: {
-      iconColor: 'rgb(182, 68, 238)',
-      color: '#fff',
+      iconColor: 'rgb(180, 181, 182)',
+      color: 'darkorchid',
       fontWeight: 500,
       fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
       fontSize: '16px',
@@ -27,7 +27,7 @@ const CARD_OPTIONS = {
         color: 'darkorchid',
       },
       '::placeholder': {
-        color: '#f9f9f9a5',
+        color: '#ffe7fb',
       },
     },
     invalid: {
@@ -287,6 +287,7 @@ export default class DonatePage extends Component{
                 <img className="itemImg" src={this.state.imageURL==='' ? purpMark : this.state.imageURL} />
             </div>
             <div className="checkout">
+              <div className="payWith">Pay with card</div>
               <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
                 <CheckoutForm price={this.state.price}/>
               </Elements>

@@ -59,11 +59,11 @@
     margin: 0 15px 20px;
     padding: 0;
     border-style: none;
-    background-color: #e7e7e7;
+    background-color: #ffffff;
     color: cornsilk;
     will-change: opacity, transform;
-    box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 #dadfee;
+    box-shadow: 0 1px 2px rgb(215, 215, 218), 0 2px 4px rgb(223, 223, 223),
+      inset 0 1px 0 #f2f2f2;
     border-radius: 4px;
   }
   
@@ -73,7 +73,8 @@
     -ms-flex-align: center;
     align-items: center;
     margin-left: 15px;
-    border-top: 1px solid #fefeff;
+    margin-right: 15px;
+    /* border-top: 1px solid #ebebeb; */
   }
   
   .FormRow:first-child {
@@ -85,7 +86,7 @@
     min-width: 70px;
     padding: 11px 0;
     padding-top: 20px;
-    color: rgb(182, 68, 238);
+    color: rgb(172, 172, 172);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -98,7 +99,7 @@
     }
   }
   .FormRowInput:-webkit-autofill {
-    -webkit-text-fill-color: rgb(0, 0, 0);
+    -webkit-text-fill-color: darkorchid;
     /* Hack to hide the default webkit autofill */
     transition: background-color 100000000s;
     animation: 1ms void-animation-out;
@@ -108,13 +109,13 @@
     font-size: 16px;
     width: 100%;
     padding: 11px 15px 11px 0;
-    color: black;
+    color: darkorchid;
     background-color: transparent;
     animation: 1ms void-animation-out;
   }
   
   .FormRowInput::placeholder {
-    color: #e298d8;
+    color: #fcc8f5;
     opacity: 50%;
   }
   
@@ -222,6 +223,7 @@
   }
 
   .copyright {
+    margin-top: 9vh;
     bottom: 10px;
   }
 
