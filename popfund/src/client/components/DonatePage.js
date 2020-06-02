@@ -168,11 +168,11 @@ const CheckoutForm = (props) => {
   return paymentMethod ? (
     <div className="Result">
       <div className="ResultTitle" role="alert">
-        Payment successful
+        Payment successful!
       </div>
       <div className="ResultMessage">
-        Thanks for trying Stripe Elements. No money was charged, but we
-        generated a PaymentMethod: {paymentMethod.id}
+        Thank you for supporting a local small business! <br />
+        This payment was processed using Stripe Elements (PaymentMethod ID: {paymentMethod.id})
       </div>
       <ResetButton onClick={reset} />
     </div>
