@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
@@ -17,8 +17,8 @@ const CARD_OPTIONS = {
   iconStyle: 'solid',
   style: {
     base: {
-      iconColor: 'rgb(182, 68, 238)',
-      color: '#fff',
+      iconColor: 'rgb(180, 181, 182)',
+      color: 'darkorchid',
       fontWeight: 500,
       fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
       fontSize: '16px',
@@ -27,7 +27,7 @@ const CARD_OPTIONS = {
         color: 'darkorchid',
       },
       '::placeholder': {
-        color: '#f9f9f9a5',
+        color: '#ffe7fb',
       },
     },
     invalid: {
@@ -107,7 +107,8 @@ const ResetButton = ({onClick}) => (
   </button>
 );
 
-const CheckoutForm = () => {
+const CheckoutForm = (props) => {
+  console.log(props.price);
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
@@ -167,11 +168,11 @@ const CheckoutForm = () => {
   return paymentMethod ? (
     <div className="Result">
       <div className="ResultTitle" role="alert">
-        Payment successful
+        Payment successful!
       </div>
       <div className="ResultMessage">
-        Thanks for trying Stripe Elements. No money was charged, but we
-        generated a PaymentMethod: {paymentMethod.id}
+        Thank you for supporting a local small business! <br />
+        This payment was processed using Stripe Elements (PaymentMethod ID: {paymentMethod.id})
       </div>
       <ResetButton onClick={reset} />
     </div>
@@ -225,7 +226,7 @@ const CheckoutForm = () => {
       </fieldset>
       {error && <ErrorMessage>{error.message}</ErrorMessage>}
       <SubmitButton processing={processing} error={error} disabled={!stripe}>
-        Pay $(fill this in)
+        Pay ${props.price}
       </SubmitButton>
     </form>
   );
@@ -256,24 +257,49 @@ const ELEMENTS_OPTIONS = {
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe('pk_live_CC5xFPZqGvq9J6DRjnti2L8w00WP0kOy2w');
 
-export default function DonatePage() {
+var qs = require('qs');
 
-    return (
-    <div>
+export default class DonatePage extends Component{
+
+  constructor(props) {
+    super(props);
+    this.state = {imageURL: '', price: 0.0, name: '',}
+  }
+
+  componentDidMount() {
+    let id = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).id;
+    const that = this;
+    fetch('/api/getItem'+'?id='+id)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        that.setState({imageURL: data.image, price: data.price, name: data.name});
+      })
+  }
+
+  render () {
+    return(
+      <div>
         <div className="AppWrapper">
-
           <div className="container">
             <div className="imgArea">
-                <img className="itemImg" src={purpMark} />
+                <img className="itemImg" src={this.state.imageURL==='' ? purpMark : this.state.imageURL} />
+                <Typography className="titleForImage" component="h4" variant="h5" align="center" color="textPrimary" gutterBottom>
+                <br></br>
+                {this.state.name}
+              </Typography>
             </div>
             <div className="checkout">
+              <div className="payWith">Pay with card</div>
               <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
-                <CheckoutForm />
+                <CheckoutForm price={this.state.price}/>
               </Elements>
             </div>
           </div>
-
         </div>
+        <br></br>
+        <br></br>
+        <br></br>
         <div class="copyright" >
             <div class="center" >
                 <Copyright/>
@@ -281,5 +307,6 @@ export default function DonatePage() {
         </div>
     </div>
     );
+  }
 
 }
