@@ -148,6 +148,12 @@ class BusinessPage extends Component {
               <Typography variant="h5" align="center" color="textSecondary" paragraph>
                 {this.state.description}
               </Typography>
+              <div /* Business Image */ className="imageBlock">
+              <img className="center"
+                            src={this.state.coverImage}
+                        alt="Business picture"
+                        />
+                    </div>
               <div className={classes.heroButtons}>
                 <Grid container spacing={2} justify="center">
                   <Grid item>
