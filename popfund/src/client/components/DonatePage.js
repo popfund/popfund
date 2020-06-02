@@ -10,6 +10,8 @@ import {
   useElements,
 } from '@stripe/react-stripe-js';
 import './2-Card-Detailed.css';
+import purpMark from './purpMark.png'
+import './DonatePage.css'
 
 const CARD_OPTIONS = {
   iconStyle: 'solid',
@@ -259,9 +261,18 @@ export default function DonatePage() {
     return (
     <div>
         <div className="AppWrapper">
-            <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
+
+          <div className="container">
+            <div className="imgArea">
+                <img className="itemImg" src={purpMark} />
+            </div>
+            <div className="checkout">
+              <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
                 <CheckoutForm />
-             </Elements>
+              </Elements>
+            </div>
+          </div>
+
         </div>
         <div class="copyright" >
             <div class="center" >
