@@ -5,6 +5,18 @@
     align-items: center;
     margin: auto;
     width: 100%;
+    border-radius: 1.5rem;
+}
+.centeredImage{
+    text-align: center;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    border-radius: 1.5rem;
+    object-fit: contain;
+    max-width: 20rem;
+    max-height: 15rem;
 }
 
 .removeGrayBox {
