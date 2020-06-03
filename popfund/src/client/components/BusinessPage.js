@@ -5,6 +5,8 @@ import { Box } from '@material-ui/core';
 import Truncate from 'react-truncate'
 import './BusinessPage.css'
 import { withRouter } from 'react-router-dom';
+import { Progress } from 'semantic-ui-react';
+import { ProgressBar } from 'react-bootstrap';
 //import queryString from 'query-string';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -113,7 +115,7 @@ class BusinessPage extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {keywords:[], address:'', description: '', businessPageLink:'', coverImage:'', name:'', phoneNumber:'', items:[]};
+      this.state = {keywords:[], address:'', description: '', businessPageLink:'', coverImage:'', name:'', phoneNumber:'', items:[], moneyRaised:0, goal:0, percent:0.0};
       //console.log(this.props.match.params.id);
   }
 
@@ -124,7 +126,7 @@ class BusinessPage extends Component {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        that.setState({keywords: data.keywords, address: data.address, description: data.description, businessPageLink: data.businessPageLink, coverImage: data.coverImage, name: data.name, phoneNumber: data.phoneNumber, items: data.saleItems})
+        that.setState({keywords: data.keywords, address: data.address, description: data.description, businessPageLink: data.businessPageLink, coverImage: data.coverImage, name: data.name, phoneNumber: data.phoneNumber, items: data.saleItems, moneyRaised: data.moneyRaised, goal: data.goal, percent: (data.moneyRaised/data.goal)*100});
       });
   }
 //i can probably make a function to handle each card and inside of the loop that renders cards can set a variable equal to the output
@@ -167,6 +169,12 @@ class BusinessPage extends Component {
                     </Button>
                   </Grid>
                 </Grid>
+              </div>
+              <div style={{"marginTop": '20px'}}>
+                <ProgressBar animated now={this.state.percent} label={`${this.state.percent}%`}/>
+                <Typography component="h6" variant="h6" align="center" color="textPrimary" gutterBottom>
+                  Goal: {this.state.moneyRaised} / {this.state.goal} Reached for May
+                </Typography>
               </div>
             </Container>
           </div>
