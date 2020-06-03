@@ -108,7 +108,7 @@ const ResetButton = ({onClick}) => (
 );
 
 const CheckoutForm = (props) => {
-  console.log(props.price);
+  // console.log(props.price);
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
@@ -189,6 +189,7 @@ const CheckoutForm = (props) => {
           value={billingDetails.name}
           onChange={(e) => {
             setBillingDetails({...billingDetails, name: e.target.value});
+            console.log('chnag name')
           }}
         />
         <Field

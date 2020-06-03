@@ -20,6 +20,10 @@ const haversine = require('haversine');
 const bizAndDis = [];
 var gLat = null
 var gLong = null
+var emptystring = '';
+var search ='';
+
+
 
 
 function Map1(props) {
@@ -30,8 +34,8 @@ function Map1(props) {
 
     const [selected, setSelected] = React.useState(null);
 
-    console.log(window.lat1);
-    console.log(window.long1);
+    //console.log(window.lat1);
+    //console.log(window.long1);
 
     if (loadError) return "Error";
     if (!isLoaded) return "Loading...";
@@ -51,7 +55,6 @@ function Map1(props) {
         businessCoords.push([value.lat, value.long, value.name, value.coverImage, value._id])
     }
     
-    console.log("wut")
 
     return (
         <div>
@@ -127,8 +130,25 @@ class BusinessList extends Component {
             dis: null
         };
 
+        const that = this;
+        fetch('/api/getBusinesses'+"?lat=37&long=-122&distance=20000")
+            .then(res => res.json())
+            .then(data => {
+                that.setState({listData: data});
+            });
+
         
-        
+    }
+
+
+    assignBusList()
+    {
+        if(window.name.length === 0) {
+            console.log('no search');
+        }
+        else {
+            console.log(window.name)
+        }
     }
 
     // Fetch buisinesses 
@@ -140,11 +160,7 @@ class BusinessList extends Component {
         console.log(window.userLname);
         console.log(window.userEmail);
         // need to add curlat and curlong here
-        fetch('/api/getBusinesses'+"?lat=37&long=-122&distance=20000")
-            .then(res => res.json())
-            .then(data => {
-                that.setState({listData: data});
-            });
+        
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 //console.log("Latitude is :", position.coords.latitude);
@@ -166,14 +182,14 @@ class BusinessList extends Component {
 
     // Sort businesses based on location/distance
     sortBusinesses() {
-        //console.log(gLat)
-        //console.log(gLong)
+        // console.log(gLat)
+        // console.log(gLong)
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 //console.log("Latitude is :", position.coords.latitude);
                 //console.log("Longitude is :", position.coords.longitude);
                 window.lat1 = position.coords.latitude
-                window.long1 = position.coords.longitude
+                window.long1 = position.coords.longitude 
             });
         }
 
@@ -192,20 +208,98 @@ class BusinessList extends Component {
             bizAndDis.push([value, dis]);
         }
 
+        
+        // Normal sorrting (no search)
         // Sort tuple/arr based on distance
-        var len = bizAndDis.length;
-        for(var i = len-1; i>=0; i--) {
-            for(var j = 1; j<=i; j++) {
-                if(bizAndDis[j-1][1]>bizAndDis[j][1]) {
-                    var temp = this.state.listData[j-1];
-                    this.state.listData[j-1] = this.state.listData[j];
-                    this.state.listData[j] = temp;
-                    var temp2 = bizAndDis[j-1];
-                    bizAndDis[j-1] = bizAndDis[j];
-                    bizAndDis[j] = temp2;
-                 }
-              }
-        }
+            var len = bizAndDis.length;
+            for(var i = len-1; i>=0; i--) {
+                for(var j = 1; j<=i; j++) {
+                    if(bizAndDis[j-1][1]>bizAndDis[j][1]) {
+                        var temp = this.state.listData[j-1];
+                        this.state.listData[j-1] = this.state.listData[j];
+                        this.state.listData[j] = temp;
+                        var temp2 = bizAndDis[j-1];
+                        bizAndDis[j-1] = bizAndDis[j];
+                        bizAndDis[j] = temp2;
+                    }
+                }
+            }   
+        
+            // Sort based on keywords
+            // putting the biz w most keywords at top
+                // code to sort
+
+            var i = this.state.listData.length;
+            var bizKeyCounter = [];
+            for(var a = 0; a < i; a++)
+            {
+                bizKeyCounter.push(0);
+            }
+
+
+            // Count # of keywords per buisness
+            for(var e = 0; e < i; e++)
+            {
+                for(var u = 0; u < this.state.listData[e].keywords.length; u++)
+                {
+                    if(window.name === this.state.listData[e].keywords[u])
+                    {
+                        bizKeyCounter[e]++;
+                    }
+                }
+            }
+
+            console.log(bizKeyCounter);
+            
+            
+            var len = i;
+            for(var q = len-1; q>=0; q--) {
+                for(var j = 1; j<=q; j++) {
+                    if(bizKeyCounter[j-1]<bizKeyCounter[j]) {
+                        var temp = this.state.listData[j-1];
+                        this.state.listData[j-1] = this.state.listData[j];
+                        this.state.listData[j] = temp;
+                        var temp2 = bizKeyCounter[j-1];
+                        bizKeyCounter[j-1] = bizKeyCounter[j];
+                        bizKeyCounter[j] = temp2;
+                        var temp2 = bizAndDis[j-1];
+                        bizAndDis[j-1] = bizAndDis[j];
+                        bizAndDis[j] = temp2;
+                    }
+                }
+            }   
+            
+            
+            
+                // now its sorted
+            // loop thru sorted list again
+            for(var w = i-1; w >= 0; w--)
+            {
+                if(bizKeyCounter[w] === 0)
+                {
+                    this.state.listData.pop();
+                }
+            }
+
+            // remove biz without keywords 
+
+    }
+
+    searchBusinesses(searchInput)
+    {
+        window.name = window.search // assigns global variable name to search
+        console.log(window.search)
+        console.log(window.name)
+        window.location = '/'
+    }
+
+    renderEmptyContainer =  () =>
+    {
+        return (
+            <div>
+                Hi
+            </div>
+        );
     }
 
 
@@ -271,11 +365,16 @@ class BusinessList extends Component {
                                     color='black'
                                     placeholder="Find sushi, barber, fat sal's... "
                                     type="search"
+
+                                    onChange={(e) => {
+                                        // console.log(e.target.value)
+                                        window.search = e.target.value
+                                    }}
                             
                                     onKeyPress={(ev) => {
-                                        console.log(`Pressed keyCode ${ev.key}`);
                                         if (ev.key === 'Enter') {
-                                          // Do code here
+                                          console.log(window.search);
+                                          this.searchBusinesses()
                                           ev.preventDefault();
                                         }
                                       }}
@@ -295,9 +394,13 @@ class BusinessList extends Component {
                 <div className="contentBlock">
                     <div className="list">
                         {this.sortBusinesses()}
+                        {this.assignBusList()}
+                        {console.log(window.name)}
+                        {console.log(this.state.listData)}
                         <FlatList
                             list={this.state.listData}
                             renderItem={this.renderBusiness}
+                            ListEmptyComponent={this.renderEmptyContainer()}
                         />
                     <div class="grad">
                     </div>

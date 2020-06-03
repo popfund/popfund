@@ -46,10 +46,13 @@ export default class App extends Component {
     }
   }
 
+
   render() {
     return (
       <div className="App">
         {this.getLocation}
+        {window.search=""}
+        {window.buslist=''}
         <Navigation />
         <Routes />
       </div>
