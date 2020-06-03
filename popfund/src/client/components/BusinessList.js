@@ -325,7 +325,7 @@ class BusinessList extends Component {
                         </p>
                         <p>
                             <div className="businessRating">
-                                Rating
+                                Distance
                             </div>
                             <div className="businessDis">
                                 {bizAndDis[idx][1].toFixed(1)} mi
