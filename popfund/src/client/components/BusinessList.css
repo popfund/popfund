@@ -11,7 +11,7 @@
 }
 
 .positionSearch:hover {
-    background-color: rgb(237, 237, 237);
+    background-color: rgb(255, 255, 255);
     -webkit-transition: background-color 250ms linear;
     -ms-transition: background-color 250ms linear;
     transition: background-color 250ms linear;
