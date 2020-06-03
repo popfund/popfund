@@ -225,6 +225,11 @@ class BusinessList extends Component {
                 }
             }   
         
+
+            if(window.name.length === 0) {
+                return
+            }
+
             // Sort based on keywords
             // putting the biz w most keywords at top
                 // code to sort
