@@ -16,11 +16,12 @@ In our application, you can see our three main features. For starters, You can s
 
 ### How to Run the Program locally:
 1) Clone the entire repository, you can use ```git clone https://github.com/popfund/popfund.git popfund```
-2) run the command ```cd popfund``` to get to the correct directory
+2) run the command ```cd popfund``` to get to the correct directory (at this point, if you ```ls``` you should see ```src``` and ```public``` subfolders listed)
 3) After cloning, we'll want to ensure all npm packages are included. Run the following command to ensure this:  
 ```npm install --save```  
 4) Run the command ```npm run dev```. This command should automatically open to localhost:3000 on your default browser. If it doesn't, look up localhost:3000 on your deafult browser.
-5) Enjoy!
+5) Chrome or your browser may ask you for location permissions. This is used for our google-maps features displaying the local businesses. Please enable these permissions and refresh the browser.
+6) Enjoy!
 
 ### How We Built It:
 We used MongoDB Atlas as our database, Node JS and Express for REST APIs, and React on the front end side. We also used Material UI to help make our website look nicer.
