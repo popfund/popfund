@@ -173,7 +173,7 @@ class BusinessPage extends Component {
               <div style={{"marginTop": '20px'}}>
                 <ProgressBar animated now={this.state.percent} label={`${this.state.percent}%`}/>
                 <Typography component="h6" variant="h6" align="center" color="textPrimary" gutterBottom>
-                  Goal: {this.state.moneyRaised} / {this.state.goal} Reached for May
+                  Goal: ${this.state.moneyRaised} / ${this.state.goal} Reached for June
                 </Typography>
               </div>
             </Container>
@@ -195,7 +195,7 @@ class BusinessPage extends Component {
                           {++i + 1}) {cards[i].name} 
                         </Typography>
                         <Typography>
-                          {cards[i].description} <br></br> <br></br> Price: {cards[i].price}
+                          {cards[i].description} <br></br> <br></br> Price: ${cards[i].price}
                         </Typography>
                       </CardContent>
                       <CardActions>
