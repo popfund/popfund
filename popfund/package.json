@@ -28,7 +28,7 @@
     "haversine": "^1.1.1",
     "mongodb": "^3.5.7",
     "prop-types": "^15.7.2",
-    "qs": "^6.9.4",
+    "qs": "^6.9.7",
     "react": "^16.5.2",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
